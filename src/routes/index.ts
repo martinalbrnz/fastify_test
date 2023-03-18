@@ -1,10 +1,9 @@
-import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
-import incomesRoutes from './incomes'
+import type { FastifyInstance } from 'fastify'
+import incomeRoutes from './income'
 import outcomesRoutes from './outcomes'
 
-async function routes(fastify: FastifyInstance, options: FastifyPluginOptions) {
-  console.log(options)
-  fastify.register(incomesRoutes, { prefix: '/incomes' })
+async function routes(fastify: FastifyInstance) {
+  fastify.register(incomeRoutes, { prefix: '/income' })
   fastify.register(outcomesRoutes, { prefix: '/outcomes' })
 }
 

@@ -3,6 +3,7 @@ import fastify from 'fastify'
 import dbConnector from './helpers/db'
 import routes from './routes'
 
+
 const server = fastify({
   logger: true,
 })
@@ -12,8 +13,8 @@ const schema = {
   required: ['PORT', 'DB_URI'],
   properties: {
     PORT: {
-      type: 'string',
-      default: '8080'
+      type: 'number',
+      default: 8080
     },
     DB_URI: {
       type: 'string'
@@ -23,18 +24,25 @@ const schema = {
 
 const options = {
   dotenv: true,
-  schema
+  schema,
+  data: process.env
 }
 
-server.register(fastifyEnv, options).ready((err) => { if (err) console.error(err) })
-server.register(dbConnector)
-server.register(routes)
+const initialize = async () => {
+  server.register(fastifyEnv, options)
+  await server.after()
+  server.register(dbConnector)
+  server.register(routes)
+}
 
-
-server.listen({ port: 8080 }, (err, address) => {
-  if (err) {
-    console.error(err)
+(async () => {
+  try {
+    initialize()
+    await server.ready()
+    await server
+      .listen({ port: server.config.PORT }, (_, address) => console.log(`Server listening at ${address}`))
+  } catch (err) {
+    server.log.error(err)
     process.exit(1)
   }
-  console.log(`Server listening at ${address}`)
-})
+})()
