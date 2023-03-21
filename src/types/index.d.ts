@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   FastifyLoggerInstance,
   RawReplyDefaultExpression,
@@ -12,7 +13,7 @@ declare module 'fastify' {
     RawRequest extends RawRequestDefaultExpression<RawServer> = RawRequestDefaultExpression<RawServer>,
     RawReply extends RawReplyDefaultExpression<RawServer> = RawReplyDefaultExpression<RawServer>,
     Logger = FastifyLoggerInstance
-  > {
+  > extends FastifyInstance {
     config: {
       PORT: number,
       DB_URI: string

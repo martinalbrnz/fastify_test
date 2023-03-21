@@ -3,7 +3,6 @@ import fastify from 'fastify'
 import dbConnector from './helpers/db'
 import routes from './routes'
 
-
 const server = fastify({
   logger: true,
 })

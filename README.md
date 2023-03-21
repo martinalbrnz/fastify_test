@@ -1,8 +1,6 @@
 ### Clone repo
 
 ```
-tsc -w
+npm i
 npm run dev
 ```
-
-Node ^18
